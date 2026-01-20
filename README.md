@@ -1,6 +1,6 @@
 # Tid (Tagged ID)
 
-## TL;DR -- The Pre-DB Sanity Filter
+## TL;DR—The Pre-DB Sanity Filter
 
 Tid is a stateless, high-performance identifier that tells you what it
 is and whether it belongs to your system before you ever hit your
