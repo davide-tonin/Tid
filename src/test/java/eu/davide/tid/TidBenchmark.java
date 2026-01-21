@@ -21,7 +21,7 @@ public class TidBenchmark
     @Setup
     public void setup()
     {
-        tid = new Tid(Map.of(0, "static-secret-for-benchmarking"));
+        tid = new Tid(Map.of(0, "static-secret-for-benchmarking".getBytes(StandardCharsets.UTF_8)));
         type = "user".getBytes(StandardCharsets.UTF_8);
         testUuid = tid.generate(type, Tid.Mode.TIME_SORTED);
     }

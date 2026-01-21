@@ -44,11 +44,11 @@ public class Tid {
             int protoVersion
     ) {}
 
-    public Tid(Map<Integer, String> secrets) {
+    public Tid(Map<Integer, byte[]> secrets) {
         validateSecrets(secrets);
         this.secretIds = secrets.keySet().stream().mapToInt(i -> i).toArray();
         this.secretBytes = new byte[MAX_SECRETS][];
-        secrets.forEach((k, v) -> this.secretBytes[k] = v.getBytes(StandardCharsets.UTF_8));
+        secrets.forEach((k, v) -> this.secretBytes[k] = v);
     }
 
     /**
@@ -179,7 +179,7 @@ public class Tid {
     private int pickRandomSecretId() { return secretIds[ThreadLocalRandom.current().nextInt(secretIds.length)]; }
     private void fillRandomness(byte[] id) { CSPRNG.nextBytes(id); }
 
-    private void validateSecrets(Map<Integer, String> secrets) {
+    private void validateSecrets(Map<Integer, byte[]> secrets) {
         if (secrets == null || secrets.isEmpty() || secrets.size() > MAX_SECRETS)
             throw new IllegalArgumentException("Secrets must be between 1 and 16 entries");
         for (Integer id : secrets.keySet()) if (id < 0 || id >= MAX_SECRETS)

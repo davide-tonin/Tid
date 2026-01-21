@@ -20,27 +20,27 @@ class TidTest {
     @BeforeEach
     void setUp() {
         // Single secret for simple testing
-        tid = new Tid(Map.of(0, "topSecret"));
+        tid = new Tid(Map.of(0, "topSecret".getBytes(StandardCharsets.UTF_8)));
     }
 
-    private static Map<Integer, String> buildSecrets(int count) {
+    private static Map<Integer, byte[]> buildSecrets(int count) {
         return IntStream.range(0, count)
                 .boxed()
-                .collect(Collectors.toMap(i -> i, i -> "secret" + i));
+                .collect(Collectors.toMap(i -> i, i -> ("secret" + i).getBytes(StandardCharsets.UTF_8)));
     }
 
     // --- Constructor Logic ---
 
     @Test
     void constructor_rejectsTooManySecrets() {
-        Map<Integer, String> secrets = buildSecrets(17);
+        Map<Integer, byte[]> secrets = buildSecrets(17);
         assertThrows(IllegalArgumentException.class, () -> new Tid(secrets));
     }
 
     @Test
     void constructor_rejectsInvalidSecretIds() {
-        assertThrows(IllegalArgumentException.class, () -> new Tid(Map.of(-1, "foo")));
-        assertThrows(IllegalArgumentException.class, () -> new Tid(Map.of(16, "foo")));
+        assertThrows(IllegalArgumentException.class, () -> new Tid(Map.of(-1, "foo".getBytes(StandardCharsets.UTF_8))));
+        assertThrows(IllegalArgumentException.class, () -> new Tid(Map.of(16, "foo".getBytes(StandardCharsets.UTF_8))));
     }
 
     // --- RFC Compliance & Logic ---
