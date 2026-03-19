@@ -80,7 +80,6 @@ class TidTest {
         UUID u = tid.generate(customType, Tid.Mode.TIME_SORTED);
 
         Tid.TidInfo info = tid.decode(u, customType);
-
         assertTrue(info.isValid());
         assertEquals(Tid.Mode.TIME_SORTED, info.mode());
         assertEquals(0, info.protoVersion());
